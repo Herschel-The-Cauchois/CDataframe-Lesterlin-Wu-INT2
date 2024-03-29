@@ -3,4 +3,11 @@ project(CDataFrameProject C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(CDataFrameProject main.c)
+add_executable(CDataFrameProject main.c
+        list.h
+        list.h
+        list.c
+        column.h
+        column.h
+        column.c
+        column.c)
