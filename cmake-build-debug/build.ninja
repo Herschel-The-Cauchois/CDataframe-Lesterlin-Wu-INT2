@@ -67,6 +67,12 @@ build CMakeFiles/CDataFrameProject.dir/column.c.obj: C_COMPILER__CDataFrameProje
   OBJECT_DIR = CMakeFiles\CDataFrameProject.dir
   OBJECT_FILE_DIR = CMakeFiles\CDataFrameProject.dir
 
+build CMakeFiles/CDataFrameProject.dir/cdataframe.c.obj: C_COMPILER__CDataFrameProject_unscanned_Debug C$:/Users/Jeune/CLionProjects/CDataframe-Lesterlin-Wu-INT2/cdataframe.c || cmake_object_order_depends_target_CDataFrameProject
+  DEP_FILE = CMakeFiles\CDataFrameProject.dir\cdataframe.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CDataFrameProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\CDataFrameProject.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target CDataFrameProject
@@ -75,7 +81,7 @@ build CMakeFiles/CDataFrameProject.dir/column.c.obj: C_COMPILER__CDataFrameProje
 #############################################
 # Link the executable CDataFrameProject.exe
 
-build CDataFrameProject.exe: C_EXECUTABLE_LINKER__CDataFrameProject_Debug CMakeFiles/CDataFrameProject.dir/main.c.obj CMakeFiles/CDataFrameProject.dir/list.c.obj CMakeFiles/CDataFrameProject.dir/column.c.obj
+build CDataFrameProject.exe: C_EXECUTABLE_LINKER__CDataFrameProject_Debug CMakeFiles/CDataFrameProject.dir/main.c.obj CMakeFiles/CDataFrameProject.dir/list.c.obj CMakeFiles/CDataFrameProject.dir/column.c.obj CMakeFiles/CDataFrameProject.dir/cdataframe.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\CDataFrameProject.dir

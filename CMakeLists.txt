@@ -10,4 +10,7 @@ add_executable(CDataFrameProject main.c
         column.h
         column.h
         column.c
-        column.c)
+        column.c
+        cdataframe.h
+        cdataframe.h
+        cdataframe.c)
