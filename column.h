@@ -17,14 +17,25 @@ union column_type {
 };
 typedef union column_type COL_TYPE;
 
+typedef struct datarray {
+    COL_TYPE data;
+    struct datarray *prev;
+    struct datarray *next;
+} DATARRAY;
+
 struct column {
     char *title;
     unsigned int size;
     unsigned int max_size;
     ENUM_TYPE column_type;
-    COL_TYPE **data;
+    DATARRAY *data; //The data contained in the column will be implemented as a linked list for convenience.
     unsigned long long int *index;
 };
+
 typedef struct column COLUMN;
+
+COLUMN *create_column(ENUM_TYPE type, char *title);
+
+int insert_value(COLUMN *col, void *value);
 
 #endif //CDATAFRAMEPROJECT_COLUMN_H
