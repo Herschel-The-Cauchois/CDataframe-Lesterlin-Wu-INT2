@@ -16,19 +16,28 @@ COLUMN *create_column(ENUM_TYPE type, char *title) {
     return col;
 };
 
+//This function inserts a value inside a column.
 int insert_value(COLUMN *col, void *value) {
     if (col->size + sizeof(value) > col->max_size) {
+        //If the size of the column + the size of the value is above the physical sizes, allocates a supplementary
+        //256 bits.
         realloc(col, col->max_size + 256);
     }
         if (col->data != NULL) {
-            DATARRAY* temp = col->data;
+            //This scenario happens if the data attribute has already an SLL in it, hence != NULL.
+            DATARRAY* temp = col->data; //Creates a pointer to the column's first SLL node.
             while (temp->next != NULL) {
+                //Moves the pointer to the successor node until it reaches the last node with NULL as successor.
                 temp = temp->next;
             }
-            DATARRAY* new_node;
-            new_node = (DATARRAY*) malloc(sizeof(DATARRAY));
+            DATARRAY* new_node; //Creates a new node for the new value.
+            new_node = (DATARRAY*) malloc(sizeof(DATARRAY)); //Allocates memory to it.
             switch (col->column_type) {
-
+                //According to the type of data the column handles, will always assign NULL to the successor of the new
+                //node, then set his predecessor as the last node of the SLL and the new node as temp's successor.
+                //Finally, to better handle displaying it will cast a type to the entered value pointer through an
+                //intermediate pointer before assigning to the data of the new node the expected value, to the correct
+                //member of the union.
                 case NULLVAL:
                     printf("Error : No type cast to column.");
                     free(new_node);
@@ -92,12 +101,13 @@ int insert_value(COLUMN *col, void *value) {
             return 0;
         } else {
             DATARRAY* new_node;
-            new_node = (DATARRAY*) malloc(sizeof(DATARRAY));
+            new_node = (DATARRAY*) malloc(sizeof(DATARRAY)); //Creates and allocates memory to the new node
+            //Holding the value we want to insert.
             new_node->prev = NULL;
             new_node->next = NULL;
-            col->data = new_node;
+            col->data = new_node; //Creates the SLL in the column's data if not existent.
             switch (col->column_type) {
-
+                //Same stuff happening for the already existing SLL case.
                 case NULLVAL:
                     printf("Error : No type cast to column.");
                     free(new_node);
