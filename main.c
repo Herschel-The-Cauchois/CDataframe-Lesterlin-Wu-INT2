@@ -17,5 +17,7 @@ int main() {
     printf("\n%s", test4->data->data.string_value);
     insert_value(test4, test5);
     printf("\n%s", test4->data->next->data.string_value);
+    free_value(test4, 2);
+    printf("\n%d", free_value(test4, 1));
     return 0;
 }

@@ -159,5 +159,28 @@ int insert_value(COLUMN *col, void *value) {
         }
 }
 
-
-
+//This function frees a value inside a column.
+int free_value(COLUMN *col, unsigned long long int index) {
+    DATARRAY* linked_list = col->data;  //Create a pointer to loop through the linked list.
+    unsigned long long int counter = 0;  //Creates a counter of iteration to be able to navigate through all elements.
+    while (linked_list->next != NULL && counter < index) {
+        //While there is a successor of the node, and we're not yet at the correct index :
+        linked_list = linked_list->next; //replace linked list node by its successor
+        counter++;
+    }
+    if (counter != index) {
+        //Detects if there is no such elements of given index, if we're at the end of the list but counter isn't at
+        //the expected value given by index.
+        return 1;
+    }
+    if (linked_list->prev == NULL) {  //If we're at the head of the list :
+        col->data = col->data->next;  //Makes column data attribute point to list's successor node
+        free(linked_list);  //Frees concerned node.
+        return 0;
+    } else {  //If we're at any other given node :
+        linked_list->prev->next = linked_list->next;  //Attaches back the wagons : previous node's successor becomes
+        //the successor of the node we're pointing at.
+        free(linked_list);  //Frees the concerned now which is now isolated from the list.
+        return 0;
+    }
+}
