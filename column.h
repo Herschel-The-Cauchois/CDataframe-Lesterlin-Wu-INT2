@@ -40,10 +40,7 @@ int insert_value(COLUMN *col, void *value);
 
 int free_value(COLUMN *col, unsigned long long int index);
 
-void free_column(COLUMN **col);
-
-void display_value(COLUMN *col, unsigned long long int i); //Considering how tedious implementing an any type to
-//string converter is, it will be turned into a simpler display for less complexity for the moment.
+void display_converter(COLUMN *col, unsigned long long int index, char* buffer, int size);
 
 void print_col(COLUMN* col);
 

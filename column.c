@@ -109,7 +109,7 @@ int insert_value(COLUMN *col, void *value) {
             switch (col->column_type) {
                 //Same stuff happening for the already existing SLL case.
                 case NULLVAL:
-                    printf("Error : No type cast to column.");
+                    printf("\nError : No type cast to column.");
                     free(new_node);
                     return 1;
                 case UINT:
@@ -170,7 +170,7 @@ int free_value(COLUMN *col, unsigned long long int index) {
     }
     if (counter != index) {
         //Detects if there is no such elements of given index, if we're at the end of the list but counter isn't at
-        //the expected value given by index.
+        //the expected value given by index. Returns 1 because the function failed to free any node.
         return 1;
     }
     if (linked_list->prev == NULL) {  //If we're at the head of the list :
@@ -183,4 +183,56 @@ int free_value(COLUMN *col, unsigned long long int index) {
         free(linked_list);  //Frees the concerned now which is now isolated from the list.
         return 0;
     }
+}
+
+//This functions places inside a buffer variable the data contained at the node at position index of the list
+//converted into a string.
+void display_converter(COLUMN *col, unsigned long long int index, char* buffer, int size) {
+    DATARRAY* temp = col->data; //Creates a temporary pointer directing to the list's head.
+    for (int i = 0; i < index; i++) {  //Loops through the list until it finds the correct node.
+        temp = temp->next;
+    }
+    switch (col->column_type) {
+
+        case NULLVAL:  //For each type of data, proceeds to the conversion using snprintf.
+            snprintf(buffer, size, "%s", (char*) NULL);
+            break;
+        case UINT:
+            snprintf(buffer, size, "%u", temp->data.uint_value);
+            break;
+        case INT:
+            snprintf(buffer, size, "%d", temp->data.int_value);
+            break;
+        case CHAR:
+            snprintf(buffer, size, "%c", temp->data.char_value);
+            break;
+        case FLOAT:
+            snprintf(buffer, size, "%f", temp->data.float_value);
+            break;
+        case DOUBLE:
+            snprintf(buffer, size, "%lf", temp->data.double_value);
+            break;
+        case STRING:
+            snprintf(buffer, size, "%s", temp->data.string_value);
+            break;
+        case STRUCTURE:
+            //C doesn't offer the possibility to reflexively access the member of its structure, hence it is not
+            //possible to implement a convenient and all encompassing way of displaying structure data.
+            snprintf(buffer, size, "%s", "NOT SUPPORTED YET");
+            break;
+    }
+}
+
+//Function that prints the whole column given by the user.
+void print_col(COLUMN* col) {
+    DATARRAY* temp = col->data;
+    int iterator = 0;
+    char* buffer = (char*) malloc(32*sizeof(char));
+    do {
+        //For each node encountered, proceeds to convert it into a string, and then print it to the side of its index.
+        display_converter(col, iterator, buffer, 32);
+        printf("\n[%d] %s", iterator, buffer);
+        temp = temp->next; //Moves to the next node and increases iterator that represents the node's index.
+        iterator++;
+    } while (temp != NULL);
 }
