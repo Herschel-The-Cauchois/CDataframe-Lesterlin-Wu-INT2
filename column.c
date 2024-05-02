@@ -218,6 +218,7 @@ void display_converter(COLUMN *col, unsigned long long int index, char* buffer, 
         case STRUCTURE:
             //C doesn't offer the possibility to reflexively access the member of its structure, hence it is not
             //possible to implement a convenient and all encompassing way of displaying structure data.
+            //développer structure de test
             snprintf(buffer, size, "%s", "NOT SUPPORTED YET");
             break;
     }
