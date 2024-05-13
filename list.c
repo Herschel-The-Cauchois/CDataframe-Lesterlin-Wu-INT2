@@ -76,31 +76,40 @@ void lst_delete_head(list * lst) {
 
 void lst_delete_tail(list * lst) {
     if (lst->tail->prev == NULL) {
+        printf("\nFreeing completely the list");
         free(lst->tail);
         lst->head = NULL;
         lst->tail = NULL;
         return;
     }
+    printf("\nFreeing the end of the list.");
     lst->tail = lst->tail->prev;
     free(lst->tail->next);
     lst->tail->next = NULL;
 }
 
 void lst_delete_lnode(list * lst, lnode * ptr) {
-    if (ptr == NULL)
+    printf("\nlst delete node test");
+    if (ptr == NULL) {
+        printf("\nptr null");
         return;
+    }
     if (ptr == lst->head) {
-        lst_delete_head(lst);
+        printf("\nptr null"); //Test prints in this function to see where it fails
+            lst_delete_head(lst);
         return;
     }
     if (ptr == lst->tail) {
+        printf("\nptr tail");
         lst_delete_tail(lst);
         return;
     }
+    printf("\nPtr in the middle");
     ptr->next->prev = ptr->prev;
     ptr->prev->next = ptr->next;
     free(ptr);
-}
+    }
+
 
 void lst_erase(list * lst) {
     if (lst->head == NULL)

@@ -80,5 +80,41 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
     }
     printf("\nColumn deleted !");
     lst_delete_lnode(cdf, temp); //Attempt at freeing the now useless node of the deleted column.
-    //With Free, it yields 0xC000005 error, and with this function 0xC0000374.
+    printf("\nColumn deleted !");
+    //With Free, it yields 0xC0000FD error, and with this function 0xC0000374.
+}
+
+int get_cdataframe_cols_size(CDATAFRAME *cdf) {}
+
+void cells_equal_x(CDATAFRAME *cdf, float x) {
+    lnode* temp = cdf->head;
+    if (cdf->head == NULL) {
+        //If the cdataframe is empty, stops the function.
+        return;
+    }
+    while (temp != cdf->tail) { //Stops the check when it hits the tail node of the list. A != NULL test provokes Cx05 error.
+        if (temp->data != NULL) { //Tests if the column has no empty data.
+            if (((COLUMN*) temp->data)->column_type == INT || ((COLUMN*) temp->data)->column_type == FLOAT || ((COLUMN*) temp->data)->column_type == UINT || ((COLUMN*) temp->data)->column_type == DOUBLE) {
+                //Verifies if the current column is of numerical type.
+                DATARRAY* col_explorer = ((COLUMN*) temp->data)->data; //Creates a new temporary pointer to loop through the column if it is of correct type.
+                unsigned long long int i = 0;  // Creates an index variable to display the position of the element found, if equal to x.
+                printf("\n%s\n-------", ((COLUMN*) temp->data)->title);  // Starts the display by displaying the title of the column.
+                while (col_explorer != NULL) {
+                    //Checks all possible numerical types supported by C to compare it to the parameter, as the function loops through the column.
+                    if ((float) col_explorer->data.int_value == x) {
+                        printf("\n%llu | %d", i, col_explorer->data.int_value);
+                    } else if (col_explorer->data.float_value == x) {
+                        printf("\n%llu | %.5f", i, col_explorer->data.float_value);
+                    } else if ((float) col_explorer->data.double_value == x) {
+                        printf("\n%llu | %.5lf", i, col_explorer->data.double_value);
+                    } else if ((float) col_explorer->data.uint_value == x) {
+                        printf("\n%llu | %u", i, col_explorer->data.uint_value);
+                    }
+                    i++; //Increments index at the end of the check.
+                    col_explorer = col_explorer->next; //Goes to the next node of the column.
+                }
+            }
+        }
+        temp = temp->next; //Goes to the next column.
+    }
 }

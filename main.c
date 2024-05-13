@@ -10,13 +10,22 @@ int main() {
     dataframe->head->data = create_column(INT, "toto");
     COLUMN * coltest = dataframe->tail->data;
     coltest->title = "Randcol";
+    COLUMN * value_comparison_test = dataframe->head->data;
     int randomval = 1;
     insert_value(coltest, &randomval);
     insert_value(coltest, &randomval); //Creates two columns and fills one with a random value.
     printf("\nValue of first col node : %s", coltest->data->data.string_value);
     printf("\nValue of second col node : %s", coltest->data->next->data.string_value); //Prints them.
+    insert_value(value_comparison_test, &randomval);
+    randomval++;
+    insert_value(value_comparison_test, &randomval);
+    randomval++;
+    insert_value(value_comparison_test, &randomval);
+    cells_equal_x(dataframe, 2.0);
+    printf("\nPrinting test column to see if correct.");
+    print_col(value_comparison_test);
     printf("\n%s", coltest->title);
-    delete_column(dataframe, "Randcol"); //Deletes randcol column.
+    //delete_column(dataframe, "Randcol"); //Deletes randcol column.
     printf("\n%s", coltest->title);  //Tries to print the title of the deleted column, which should yield nonsense.
     printf("\nTest");
     return 0;
