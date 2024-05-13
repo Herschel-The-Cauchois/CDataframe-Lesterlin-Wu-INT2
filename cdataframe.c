@@ -92,7 +92,7 @@ void cells_equal_x(CDATAFRAME *cdf, float x) {
         //If the cdataframe is empty, stops the function.
         return;
     }
-    while (temp != cdf->tail) { //Stops the check when it hits the tail node of the list. A != NULL test provokes Cx05 error.
+    while (temp != cdf->tail->next) { //Stops the check when it hits the tail node of the list. A != NULL test provokes Cx05 error.
         if (temp->data != NULL) { //Tests if the column has no empty data.
             if (((COLUMN*) temp->data)->column_type == INT || ((COLUMN*) temp->data)->column_type == FLOAT || ((COLUMN*) temp->data)->column_type == UINT || ((COLUMN*) temp->data)->column_type == DOUBLE) {
                 //Verifies if the current column is of numerical type.
@@ -108,6 +108,72 @@ void cells_equal_x(CDATAFRAME *cdf, float x) {
                     } else if ((float) col_explorer->data.double_value == x) {
                         printf("\n%llu | %.5lf", i, col_explorer->data.double_value);
                     } else if ((float) col_explorer->data.uint_value == x) {
+                        printf("\n%llu | %u", i, col_explorer->data.uint_value);
+                    }
+                    i++; //Increments index at the end of the check.
+                    col_explorer = col_explorer->next; //Goes to the next node of the column.
+                }
+            }
+        }
+        temp = temp->next; //Goes to the next column.
+    }
+}
+
+void cells_superior_x(CDATAFRAME *cdf, float x) {
+    lnode* temp = cdf->head;
+    if (cdf->head == NULL) {
+        //If the cdataframe is empty, stops the function.
+        return;
+    }
+    while (temp != cdf->tail->next) { //Stops the check when it hits the tail node of the list. A != NULL test provokes Cx05 error.
+        if (temp->data != NULL) { //Tests if the column has no empty data.
+            if (((COLUMN*) temp->data)->column_type == INT || ((COLUMN*) temp->data)->column_type == FLOAT || ((COLUMN*) temp->data)->column_type == UINT || ((COLUMN*) temp->data)->column_type == DOUBLE) {
+                //Verifies if the current column is of numerical type.
+                DATARRAY* col_explorer = ((COLUMN*) temp->data)->data; //Creates a new temporary pointer to loop through the column if it is of correct type.
+                unsigned long long int i = 0;  // Creates an index variable to display the position of the element found, if equal to x.
+                printf("\n%s\n-------", ((COLUMN*) temp->data)->title);  // Starts the display by displaying the title of the column.
+                while (col_explorer != NULL) {
+                    //Checks all possible numerical types supported by C to compare it to the parameter, as the function loops through the column.
+                    if (((COLUMN*) temp->data)->column_type == INT && (float) col_explorer->data.int_value > x) {
+                        printf("\n%llu | %d", i, col_explorer->data.int_value);
+                    } else if (((COLUMN*) temp->data)->column_type == FLOAT && col_explorer->data.float_value > x) {
+                        printf("\n%llu | %.5f", i, col_explorer->data.float_value);
+                    } else if (((COLUMN*) temp->data)->column_type == DOUBLE && (float) col_explorer->data.double_value > x) {
+                        printf("\n%llu | %.5lf", i, col_explorer->data.double_value);
+                    } else if (((COLUMN*) temp->data)->column_type == UINT && (float) col_explorer->data.uint_value > x) {
+                        printf("\n%llu | %u", i, col_explorer->data.uint_value);
+                    }
+                    i++; //Increments index at the end of the check.
+                    col_explorer = col_explorer->next; //Goes to the next node of the column.
+                }
+            }
+        }
+        temp = temp->next; //Goes to the next column.
+    }
+}
+
+void cells_inferior_x(CDATAFRAME *cdf, float x) {
+    lnode* temp = cdf->head;
+    if (cdf->head == NULL) {
+        //If the cdataframe is empty, stops the function.
+        return;
+    }
+    while (temp != cdf->tail->next) { //Stops the check when it hits the tail node of the list. A != NULL test provokes Cx05 error.
+        if (temp->data != NULL) { //Tests if the column has no empty data.
+            if (((COLUMN*) temp->data)->column_type == INT || ((COLUMN*) temp->data)->column_type == FLOAT || ((COLUMN*) temp->data)->column_type == UINT || ((COLUMN*) temp->data)->column_type == DOUBLE) {
+                //Verifies if the current column is of numerical type.
+                DATARRAY* col_explorer = ((COLUMN*) temp->data)->data; //Creates a new temporary pointer to loop through the column if it is of correct type.
+                unsigned long long int i = 0;  // Creates an index variable to display the position of the element found, if equal to x.
+                printf("\n%s\n-------", ((COLUMN*) temp->data)->title);  // Starts the display by displaying the title of the column.
+                while (col_explorer != NULL) {
+                    //Checks all possible numerical types supported by C to compare it to the parameter, as the function loops through the column.
+                    if (((COLUMN*) temp->data)->column_type == INT && (float) col_explorer->data.int_value < x) {
+                        printf("\n%llu | %d", i, col_explorer->data.int_value);
+                    } else if (((COLUMN*) temp->data)->column_type == FLOAT && col_explorer->data.float_value < x) {
+                        printf("\n%llu | %.5f", i, col_explorer->data.float_value);
+                    } else if (((COLUMN*) temp->data)->column_type == DOUBLE && (float) col_explorer->data.double_value < x) {
+                        printf("\n%llu | %.5lf", i, col_explorer->data.double_value);
+                    } else if (((COLUMN*) temp->data)->column_type == UINT && (float) col_explorer->data.uint_value < x) {
                         printf("\n%llu | %u", i, col_explorer->data.uint_value);
                     }
                     i++; //Increments index at the end of the check.
