@@ -27,6 +27,7 @@ CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size) {
     //after that, for all remaining types in the cdftype array:
     for (int i = 1; i < size; i++) {
         lnode* new = (lnode*) malloc(sizeof(lnode));
+        new->next = NULL; //Very important, sets the successor of the new node to NULL.
         temp->next = new; //Initialises a new lnode to put to the succession of the previous, starting from
         //the head node.
         char* coltitle = (char*) malloc(20*sizeof(char));
@@ -85,6 +86,25 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
 }
 
 int get_cdataframe_cols_size(CDATAFRAME *cdf) {}
+
+int does_value_exist(CDATAFRAME *cdf, void *value) {}
+
+void rows_cols(CDATAFRAME *cdf) {
+    lnode* temp = cdf->head; //Creates a temporary pointer with the head of the list.
+    int cols = 0; //Creates two variables to store the number of columns and rows.
+    unsigned long long int rows = 0;
+    while (temp != NULL) {
+        cols++; //Counts column by looping through the cdataframe list.
+        temp = temp->next;
+    }
+    temp = cdf->tail;
+    DATARRAY* col_explorer = ((COLUMN*) temp->data)->data; //Retrieves a pointer to the last column's content.
+    while (col_explorer != NULL) {
+        rows++;  //Loops through the said column and increments each time it encounters a non-empty node.
+        col_explorer = col_explorer->next;
+    }
+    printf("\nThis Dataframe has %d columns and %llu rows.", cols, rows);
+}
 
 void cells_equal_x(CDATAFRAME *cdf, float x) {
     lnode* temp = cdf->head;

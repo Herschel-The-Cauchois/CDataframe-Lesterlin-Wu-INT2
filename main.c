@@ -13,7 +13,6 @@ int main() {
     COLUMN * value_comparison_test = dataframe->head->data;
     dataframe->tail->data = create_column(FLOAT, "titi");
     COLUMN * value_comparison_test2 = dataframe->tail->data;
-    printf("Am i failing here ?");
     int randomval = 1;
     insert_value(coltest, &randomval);
     insert_value(coltest, &randomval); //Creates two columns and fills one with a random value.
@@ -37,6 +36,7 @@ int main() {
     print_col(value_comparison_test);
     printf("\n---------");
     print_col(value_comparison_test2);
+    rows_cols(dataframe);
     printf("\n%s", coltest->title);
     //delete_column(dataframe, "Randcol"); //Deletes randcol column.
     printf("\n%s", coltest->title);  //Tries to print the title of the deleted column, which should yield nonsense.
