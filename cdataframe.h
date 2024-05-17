@@ -33,6 +33,8 @@ int does_value_exist(CDATAFRAME *cdf, void *value);
 
 int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned long long int col);
 
+void display_col_names(CDATAFRAME *cdf);
+
 void rows_cols(CDATAFRAME *cdf); //First function of the Cdataframe statistic function
 
 void cells_equal_x(CDATAFRAME *cdf, float x);

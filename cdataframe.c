@@ -31,7 +31,7 @@ CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size) {
         temp->next = new; //Initialises a new lnode to put to the succession of the previous, starting from
         //the head node.
         char* coltitle = (char*) malloc(20*sizeof(char));
-        snprintf(coltitle, 20, "Sans nom %d", i); //Formats a default title string for each column.
+        snprintf(coltitle, 20, "Sans nom %d", i+1); //Formats a default title string for each column.
         COLUMN* new_col = create_column(cdftype[i], coltitle);
         new->data = new_col; //Initializes new column and puts it in the lnode's data.
         temp = temp->next; //Goes to next lnode.
@@ -43,7 +43,7 @@ CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size) {
 void delete_column(CDATAFRAME *cdf, char *col_name) {
     lnode* temp = cdf->head; //Creates temporary pointer that points to the start node.
     COLUMN* col;
-    while (temp->next != NULL || col->title != col_name) {
+    while (temp != NULL || col->title != col_name) {
         if (temp->data != NULL) {
             col = (COLUMN *) temp->data;  //The col pointer will then each time point at the column data of the node.
             printf("\n%u", col->column_type);  //Prints the column type if it finds it.
@@ -88,6 +88,14 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
 int get_cdataframe_cols_size(CDATAFRAME *cdf) {}
 
 int does_value_exist(CDATAFRAME *cdf, void *value) {}
+
+void display_col_names(CDATAFRAME *cdf) {
+    lnode* temp = cdf->head;
+    while (temp != NULL) {
+        printf("\n%s", ((COLUMN*) temp->data)->title);
+        temp = temp->next;
+    }
+}
 
 void rows_cols(CDATAFRAME *cdf) {
     lnode* temp = cdf->head; //Creates a temporary pointer with the head of the list.

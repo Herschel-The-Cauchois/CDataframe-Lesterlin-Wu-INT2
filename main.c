@@ -7,6 +7,7 @@
 int main() {
     ENUM_TYPE cdftype[] = {INT, STRING, FLOAT};
     CDATAFRAME* dataframe = create_cdataframe(cdftype, 3); //Creates a simple dataframe with three columns.
+    display_col_names(dataframe);
     dataframe->head->data = create_column(INT, "toto");
     COLUMN * coltest = dataframe->head->next->data;
     coltest->title = "Randcol";
@@ -38,8 +39,8 @@ int main() {
     print_col(value_comparison_test2);
     rows_cols(dataframe);
     printf("\n%s", coltest->title);
-    //delete_column(dataframe, "Randcol"); //Deletes randcol column.
-    printf("\n%s", coltest->title);  //Tries to print the title of the deleted column, which should yield nonsense.
-    printf("\nTest");
+    printf("\tERASING");
+    delete_column(dataframe, "Randcol"); //Deletes randcol column.
+    display_col_names(dataframe);
     return 0;
 }
