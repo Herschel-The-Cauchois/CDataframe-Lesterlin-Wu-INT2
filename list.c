@@ -104,10 +104,12 @@ void lst_delete_lnode(list * lst, lnode * ptr) {
         lst_delete_tail(lst);
         return;
     }
-    printf("\nPtr in the middle");
+    printf("\nPtr in the middle\n");
     ptr->next->prev = ptr->prev;
     ptr->prev->next = ptr->next;
+    printf("\nNode reconnection done.\n");
     free(ptr);
+    printf("\nptr freed.\n");
     }
 
 
