@@ -178,9 +178,14 @@ int free_value(COLUMN *col, unsigned long long int index) {
         free(linked_list);  //Frees concerned node.
         return 0;
     } else {  //If we're at any other given node :
+        printf("\nRemoving those middle nodes");
         linked_list->prev->next = linked_list->next;  //Attaches back the wagons : previous node's successor becomes
         //the successor of the node we're pointing at.
+        if (linked_list->next != NULL) {
+            linked_list->next->prev = linked_list->prev; //The predecessor of the node becomes its successor's predecessor.
+        }
         free(linked_list);  //Frees the concerned now which is now isolated from the list.
+        printf("\nkk boudin");
         return 0;
     }
 }

@@ -38,9 +38,9 @@ int main() {
     printf("\n---------");
     print_col(value_comparison_test2);
     rows_cols(dataframe);
-    printf("\n%s", coltest->title);
     printf("\tERASING");
-    delete_column(dataframe, "Randcol"); //Deletes randcol column.
     display_col_names(dataframe);
+    printf("\nDeleting entire Cdataframe\n------");
+    delete_cdataframe(&dataframe);
     return 0;
 }

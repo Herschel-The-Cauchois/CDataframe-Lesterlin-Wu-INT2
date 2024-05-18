@@ -89,27 +89,20 @@ void lst_delete_tail(list * lst) {
 }
 
 void lst_delete_lnode(list * lst, lnode * ptr) {
-    printf("\nlst delete node test");
     if (ptr == NULL) {
-        printf("\nptr null");
         return;
     }
     if (ptr == lst->head) {
-        printf("\nptr null"); //Test prints in this function to see where it fails
             lst_delete_head(lst);
         return;
     }
     if (ptr == lst->tail) {
-        printf("\nptr tail");
         lst_delete_tail(lst);
         return;
     }
-    printf("\nPtr in the middle\n");
     ptr->next->prev = ptr->prev;
     ptr->prev->next = ptr->next;
-    printf("\nNode reconnection done.\n");
     free(ptr);
-    printf("\nptr freed.\n");
     }
 
 

@@ -40,6 +40,7 @@ CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size) {
         temp = temp->next; //Goes to next lnode.
     }
     dataframe->tail = temp; //Sets tail of the dataframe as the last lnode put in temp.
+    dataframe->tail->next = NULL;
     return dataframe;
 }
 
@@ -71,8 +72,24 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
     free_value(col, 0); //Frees the head of the column.
     free(col);  //Frees the data attribute of the node itself.
     printf("\nFreeing col pointer : done");
-    lst_delete_lnode(cdf, col_node); //Attempt at freeing the now useless node of the deleted column.
+    lst_delete_lnode(cdf, col_node); //Frees the now useless node of the deleted column.
     printf("\nColumn deleted !");
+}
+
+void delete_cdataframe(CDATAFRAME **cdf) {
+    if (*cdf == NULL) {
+        return;
+    }
+    printf("\nNULL condition passed");
+    while ((*cdf)->head != NULL) {
+        printf("\nFreeing a column omg.");
+        char* col_title = ((COLUMN*) (*cdf)->tail->data)->title;
+        delete_column(*cdf, col_title);
+    }
+    printf("\nFreed cols baby");
+    free(*cdf);
+    printf("\nDataframe deleted !!!!");
+    return;
 }
 
 int get_cdataframe_cols_size(CDATAFRAME *cdf) {}
