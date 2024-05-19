@@ -189,6 +189,25 @@ int add_row(CDATAFRAME *cdf, int hard) {
     return 0;
 }
 
+int add_col(CDATAFRAME *cdf) {
+    lnode* tail = cdf->tail; //Creates a pointer at the tail of the list of columns.
+    printf("\nTail column is %s", ((COLUMN*) tail->data)->title);
+    lnode* new = (lnode*) malloc(sizeof(lnode));
+    new->prev = tail;
+    new->next = NULL;  //Initializes the future new lnode to preserve the logic of the list.
+    printf("\nEnter a title for the column : ");
+    char* title = (char*) malloc(32*sizeof(char));
+    gets(title); //Same trick to avoid buffer backspace filling.
+    gets(title);
+    int type;
+    printf("\nChoose a type for the column, from 2 to 8 (UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE) : ");
+    scanf("%d", &type);
+    new->data = create_column(type, title); //Creates the column and puts the new node-column at the tail of the list.
+    tail->next = new;
+    cdf->tail = new;
+    return 0;
+}
+
 int rename_col(CDATAFRAME *cdf, char* column, char* new_name) {
     lnode* temp = cdf->head; //Creates temporary pointer that points to the start node.
     COLUMN* col = NULL;

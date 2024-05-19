@@ -56,6 +56,10 @@ int main() {
     me.id = 2;
     me.average = 1;
     printf("\nDoes student 2 exist : %d", does_value_exist(dataframe, &me, STRUCTURE));
+    add_col(dataframe);
+    add_row(dataframe, 0);
+    print_col(dataframe->tail->data);
+    print_col(struct_management);
     printf("\nDeleting entire Cdataframe\n------");
     delete_cdataframe(&dataframe);
     return 0;
