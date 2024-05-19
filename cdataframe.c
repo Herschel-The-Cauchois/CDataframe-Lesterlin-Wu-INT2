@@ -119,7 +119,26 @@ void display_cdataframe(CDATAFRAME *cdf) {
     }
 }
 
+void display_cdataframe_row_limited(CDATAFRAME *cdf, int limit) {
+    lnode* temp = cdf->head; //Stores the head of the dataframe's SLL here.
+    while (temp != NULL) {
+        DATARRAY* temp2 = ((COLUMN*) temp->data)->data; //Stores the column's data SLL
+        int iterator = 0;
+        char* buffer = (char*) malloc(64*sizeof(char));
+        printf("\n%s\n-------", ((COLUMN*) temp->data)->title);
+        do {
+            //For each node encountered, proceeds to convert it into a string, and then print it to the side of its index.
+            display_converter(((COLUMN*) temp->data), iterator, buffer, 64);
+            printf("\n[%d] %s", iterator, buffer); //Prints the index of an element in the list as well as the data itself.
+            temp2 = temp2->next; //Moves to the next node and increases iterator that represents the node's index.
+            iterator++;
+        } while (temp2 != NULL && iterator < limit); //Continues until the end of the list is met or the iterator passes the limit.
+        temp = temp->next;
+    }
+}
+
 void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit) {
+    //Same principle as display_cdataframe, except that a counter will trigger the end of the while loop if the limit is passed.
     lnode* temp = cdf->head;
     int counter = 0;
     while (temp != NULL && counter < limit) {

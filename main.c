@@ -43,6 +43,7 @@ int main() {
     access_replace_value(dataframe, 2, 3);
     display_cdataframe(dataframe);
     display_cdataframe_col_limited(dataframe, 1);
+    display_cdataframe_row_limited(dataframe, 2);
     printf("\nDeleting entire Cdataframe\n------");
     delete_cdataframe(&dataframe);
     return 0;
