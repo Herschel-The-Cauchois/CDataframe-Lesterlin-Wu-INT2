@@ -46,6 +46,7 @@ int main() {
     printf("\n Filling -------");
     add_row(dataframe, 1);
     add_row(dataframe, 1);
+    delete_row(dataframe, 0);
     add_row(dataframe, 0);
     print_col(coltest);
     print_col(value_comparison_test);

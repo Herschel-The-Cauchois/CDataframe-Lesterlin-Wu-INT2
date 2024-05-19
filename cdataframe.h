@@ -24,7 +24,7 @@ void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit);
 int add_row(CDATAFRAME *cdf, int hard); //Hard serves as a boolean to indicate if the data added should be hard filled
 //or based on user input.
 
-int delete_row(CDATAFRAME *cdf, unsigned long long int i);
+void delete_row(CDATAFRAME *cdf, unsigned long long int i);
 
 int add_col(CDATAFRAME *cdf);
 

@@ -128,6 +128,7 @@ int add_row(CDATAFRAME *cdf, int hard) {
                 } else {
                     printf("\nEnter a character : ");
                     scanf("%c", &(new_data.char_value));
+                    scanf("%c", &(new_data.char_value));
                 }
                 insert_value(temp->data, &new_data);
                 break;
@@ -187,6 +188,14 @@ int add_row(CDATAFRAME *cdf, int hard) {
         temp = temp->next;
     }
     return 0;
+}
+
+void delete_row(CDATAFRAME *cdf, unsigned long long int i) {
+    lnode* temp = cdf->head; //Creates a pointer at the head of the list of columns.
+    while (temp != NULL) {
+        free_value(temp->data, i); //Uses the free value function at index i on all columns.
+        temp = temp->next;
+    }
 }
 
 int add_col(CDATAFRAME *cdf) {
