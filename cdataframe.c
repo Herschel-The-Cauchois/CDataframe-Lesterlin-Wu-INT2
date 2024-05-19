@@ -119,7 +119,7 @@ void display_cdataframe(CDATAFRAME *cdf) {
     }
 }
 
-void display_cdataframe_row_limited(CDATAFRAME *cdf, int limit) {
+void display_cdataframe_row_limited(CDATAFRAME *cdf, unsigned long long int limit) {
     lnode* temp = cdf->head; //Stores the head of the dataframe's SLL here.
     while (temp != NULL) {
         DATARRAY* temp2 = ((COLUMN*) temp->data)->data; //Stores the column's data SLL
@@ -522,7 +522,7 @@ void rows_cols(CDATAFRAME *cdf) {
     printf("\nThis Dataframe has %d columns and %llu rows.", cols, rows);
 }
 
-void cells_equal_x(CDATAFRAME *cdf, float x) {
+void cells_equal_x(CDATAFRAME *cdf, double x) {
     lnode* temp = cdf->head;
     if (cdf->head == NULL) {
         //If the cdataframe is empty, stops the function.
@@ -537,13 +537,13 @@ void cells_equal_x(CDATAFRAME *cdf, float x) {
                 printf("\n%s\n-------", ((COLUMN*) temp->data)->title);  // Starts the display by displaying the title of the column.
                 while (col_explorer != NULL) {
                     //Checks all possible numerical types supported by C to compare it to the parameter, as the function loops through the column.
-                    if ((float) col_explorer->data.int_value == x) {
+                    if ((double) col_explorer->data.int_value == x) {
                         printf("\n%llu | %d", i, col_explorer->data.int_value);
-                    } else if (col_explorer->data.float_value == x) {
+                    } else if ((double) col_explorer->data.float_value == x) {
                         printf("\n%llu | %.5f", i, col_explorer->data.float_value);
-                    } else if ((float) col_explorer->data.double_value == x) {
+                    } else if ((double) col_explorer->data.double_value == x) {
                         printf("\n%llu | %.5lf", i, col_explorer->data.double_value);
-                    } else if ((float) col_explorer->data.uint_value == x) {
+                    } else if ((double) col_explorer->data.uint_value == x) {
                         printf("\n%llu | %u", i, col_explorer->data.uint_value);
                     }
                     i++; //Increments index at the end of the check.
@@ -555,7 +555,7 @@ void cells_equal_x(CDATAFRAME *cdf, float x) {
     }
 }
 
-void cells_superior_x(CDATAFRAME *cdf, float x) {
+void cells_superior_x(CDATAFRAME *cdf, double x) {
     lnode* temp = cdf->head;
     if (cdf->head == NULL) {
         //If the cdataframe is empty, stops the function.
@@ -588,7 +588,7 @@ void cells_superior_x(CDATAFRAME *cdf, float x) {
     }
 }
 
-void cells_inferior_x(CDATAFRAME *cdf, float x) {
+void cells_inferior_x(CDATAFRAME *cdf, double x) {
     lnode* temp = cdf->head;
     if (cdf->head == NULL) {
         //If the cdataframe is empty, stops the function.

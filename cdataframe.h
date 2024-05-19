@@ -15,7 +15,7 @@ void fill_cdataframe(CDATAFRAME *cdf);
 
 void display_cdataframe(CDATAFRAME *cdf);
 
-void display_cdataframe_row_limited(CDATAFRAME *cdf, int limit);
+void display_cdataframe_row_limited(CDATAFRAME *cdf, unsigned long long int limit);
 
 void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit);
 
@@ -36,10 +36,10 @@ void display_col_names(CDATAFRAME *cdf);
 
 void rows_cols(CDATAFRAME *cdf); //First function of the Cdataframe statistic function
 
-void cells_equal_x(CDATAFRAME *cdf, float x);
+void cells_equal_x(CDATAFRAME *cdf, double x);
 
-void cells_superior_x(CDATAFRAME *cdf, float x);
+void cells_superior_x(CDATAFRAME *cdf, double x);
 
-void cells_inferior_x(CDATAFRAME *cdf, float x);
+void cells_inferior_x(CDATAFRAME *cdf, double x);
 
 #endif //CDATAFRAMEPROJECT_CDATAFRAME_H
