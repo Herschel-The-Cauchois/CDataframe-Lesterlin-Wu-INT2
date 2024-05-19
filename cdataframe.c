@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "cdataframe.h"
 //Improvement idea for long csv file management : like in complexity exercise on fibonacci, create SLL of dataframes
 //containing successive parts of the csv table. To not bloat memory, when looked through a dataframe moves it to the
@@ -95,10 +96,28 @@ void delete_cdataframe(CDATAFRAME **cdf) {
 
 int get_cdataframe_cols_size(CDATAFRAME *cdf) {}
 
+void fill_cdataframe(CDATAFRAME *cdf) {
+    unsigned int hard = 2;
+    unsigned long long int size = 0;
+    while (hard > 1) {
+        printf("\nWould you like to hardfill (1) or write by yourself data (0) ? Enter preferred option : ");
+        scanf("%u", &hard);
+    }
+    while (size == 0) {
+        printf("\nEnter the desired size of your filling : ");
+        scanf("%llu", &size);
+    }
+    for (unsigned long long int i = 0; i < size; i++) {
+        add_row(cdf, hard);
+    }
+}
+
 int add_row(CDATAFRAME *cdf, int hard) {
     lnode* temp = cdf->head; //Puts in a pointer the head of the list of columns.
     while (temp != NULL) { //Repeats until all columns got a new node in them.
         int* randominator = (int*) malloc(sizeof(int)); //Uses an empty variable to generate random input for hard filling.
+        srand(time(NULL));
+        *randominator = rand();
         COL_TYPE new_data; //For user input filling, creates a variable that can hold all the datatypes the dataframe can handle.
         switch (((COLUMN*) temp->data)->column_type) {
 
@@ -208,9 +227,11 @@ int add_col(CDATAFRAME *cdf) {
     char* title = (char*) malloc(32*sizeof(char));
     gets(title); //Same trick to avoid buffer backspace filling.
     gets(title);
-    int type;
-    printf("\nChoose a type for the column, from 2 to 8 (UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE) : ");
-    scanf("%d", &type);
+    int type = 1;
+    while (type < 2 || type > 8) { //Secures input to obtain a type supported by the program.
+        printf("\nChoose a type for the column, from 2 to 8 (UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE) : ");
+        scanf("%d", &type);
+    }
     new->data = create_column(type, title); //Creates the column and puts the new node-column at the tail of the list.
     tail->next = new;
     cdf->tail = new;
