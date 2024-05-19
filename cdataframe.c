@@ -154,7 +154,7 @@ int add_row(CDATAFRAME *cdf, int hard) {
                     new_data.string_value = (char*) malloc(30*sizeof(char));
                     new_data.string_value = (char*) randominator; //If in hard filling mode, produces a random string.
                 } else {
-                    printf("\nEnter size of the string :");
+                    printf("\nEnter size of the string : ");
                     char* temp2 = (char*) malloc(256*sizeof(char));
                     unsigned int size = -1; //This will be converted into a huge value to trick the program to trigger the while loop to avoid skipping the size entering phase.
                     while (size > 256) {
@@ -172,7 +172,16 @@ int add_row(CDATAFRAME *cdf, int hard) {
                 insert_value(temp->data, new_data.string_value);
                 break;
             case STRUCTURE:
-                printf("\nNOT SUPPORTED YET, WIP");
+                if (hard) {
+                    ((STUDENT*) new_data.struct_value)->id = (int) *randominator;
+                    ((STUDENT*) new_data.struct_value)->average = (float) abs(*randominator);
+                } else {
+                    printf("\nEnter Student ID (integer) : ");
+                    scanf("%d", &((STUDENT*) new_data.struct_value)->id);
+                    printf("\nEnter Student average grade : ");
+                    scanf("%f", &((STUDENT*) new_data.struct_value)->average);
+                }
+                insert_value(temp->data, new_data.struct_value);
                 break;
         }
         temp = temp->next;
@@ -272,7 +281,18 @@ int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype) {
             }
             return 0;
         case STRUCTURE:
-            break;
+            while (temp != NULL) {
+                if (((COLUMN*) temp->data)->column_type == STRUCTURE) {
+                    DATARRAY* col_explorer = ((COLUMN*) temp->data)->data;
+                    while (col_explorer != NULL) {
+                        if (((STUDENT*) col_explorer->data.struct_value)->id == ((STUDENT*) value)->id && ((STUDENT*) col_explorer->data.struct_value)->average == ((STUDENT*) value)->average) {
+                            return 1;
+                        }
+                        col_explorer = col_explorer->next;
+                    }
+                }
+                temp = temp->next;
+            }
         default:
             return 0;
     }

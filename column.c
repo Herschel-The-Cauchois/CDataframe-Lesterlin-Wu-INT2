@@ -222,10 +222,8 @@ void display_converter(COLUMN *col, unsigned long long int index, char* buffer, 
             snprintf(buffer, size, "%s", temp->data.string_value);
             break;
         case STRUCTURE:
-            //C doesn't offer the possibility to reflexively access the member of its structure, hence it is not
-            //possible to implement a convenient and all encompassing way of displaying structure data.
-            //développer structure de test
-            snprintf(buffer, size, "%s", "NOT SUPPORTED YET");
+            //Done for the simple structure student.
+            snprintf(buffer, size, "Student : %d | Average : %.2f", ((STUDENT*) temp->data.struct_value)->id, ((STUDENT*) temp->data.struct_value)->average);
             break;
     }
 }
@@ -234,11 +232,11 @@ void display_converter(COLUMN *col, unsigned long long int index, char* buffer, 
 void print_col(COLUMN* col) {
     DATARRAY* temp = col->data;
     int iterator = 0;
-    char* buffer = (char*) malloc(32*sizeof(char));
+    char* buffer = (char*) malloc(64*sizeof(char));
     printf("\n%s\n-------", col->title);
     do {
         //For each node encountered, proceeds to convert it into a string, and then print it to the side of its index.
-        display_converter(col, iterator, buffer, 32);
+        display_converter(col, iterator, buffer, 64);
         printf("\n[%d] %s", iterator, buffer);
         temp = temp->next; //Moves to the next node and increases iterator that represents the node's index.
         iterator++;

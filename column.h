@@ -1,6 +1,11 @@
 #ifndef CDATAFRAMEPROJECT_COLUMN_H
 #define CDATAFRAMEPROJECT_COLUMN_H
 
+typedef struct Student {
+    int id;
+    float average;
+}STUDENT;
+
 enum enum_type {
     NULLVAL = 1, UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE
 };
