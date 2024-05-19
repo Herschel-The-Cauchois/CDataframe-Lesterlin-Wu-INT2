@@ -94,8 +94,6 @@ void delete_cdataframe(CDATAFRAME **cdf) {
     printf("\nDataframe deleted !!!!");
 }
 
-int get_cdataframe_cols_size(CDATAFRAME *cdf) {}
-
 void fill_cdataframe(CDATAFRAME *cdf) {
     unsigned int hard = 2;
     unsigned long long int size = 0;
@@ -109,6 +107,25 @@ void fill_cdataframe(CDATAFRAME *cdf) {
     }
     for (unsigned long long int i = 0; i < size; i++) {
         add_row(cdf, hard);
+    }
+}
+
+void display_cdataframe(CDATAFRAME *cdf) {
+    //Takes the SLL and runs through it to print each of its columns.
+    lnode* temp = cdf->head;
+    while (temp != NULL) {
+        print_col(temp->data);
+        temp = temp->next;
+    }
+}
+
+void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit) {
+    lnode* temp = cdf->head;
+    int counter = 0;
+    while (temp != NULL && counter < limit) {
+        print_col(temp->data);
+        counter++;
+        temp = temp->next;
     }
 }
 

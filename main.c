@@ -41,7 +41,8 @@ int main() {
     print_col(dataframe->tail->data);
     print_col(struct_management);
     access_replace_value(dataframe, 2, 3);
-    print_col(value_comparison_test2);
+    display_cdataframe(dataframe);
+    display_cdataframe_col_limited(dataframe, 1);
     printf("\nDeleting entire Cdataframe\n------");
     delete_cdataframe(&dataframe);
     return 0;

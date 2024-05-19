@@ -11,8 +11,6 @@ void delete_column(CDATAFRAME *cdf, char *col_name);
 
 void delete_cdataframe(CDATAFRAME **cdf);
 
-int get_cdataframe_cols_size(CDATAFRAME *cdf);
-
 void fill_cdataframe(CDATAFRAME *cdf);
 
 void display_cdataframe(CDATAFRAME *cdf);
