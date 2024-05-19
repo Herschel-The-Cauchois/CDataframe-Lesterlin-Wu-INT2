@@ -6,15 +6,15 @@
 
 int main() {
     ENUM_TYPE cdftype[] = {INT, STRING, STRUCTURE,FLOAT};
-    CDATAFRAME* dataframe = create_cdataframe(cdftype, 3); //Creates a simple dataframe with three columns.
+    CDATAFRAME* dataframe = create_cdataframe(cdftype, 4); //Creates a simple dataframe with four columns.
     display_col_names(dataframe);
-    dataframe->head->data = create_column(INT, "toto");
     COLUMN * coltest = dataframe->head->next->data;
-    coltest->title = "Randcol";
+    rename_col(dataframe, "Sans nom 1", "toto");
+    rename_col(dataframe, "Sans nom 2", "Randcol");
+    rename_col(dataframe, "Sans nom 3", "Students");
+    rename_col(dataframe, "Sans nom 4", "titi");
     COLUMN * value_comparison_test = dataframe->head->data;
-    dataframe->tail->data = create_column(FLOAT, "titi");
     COLUMN * value_comparison_test2 = dataframe->tail->data;
-    dataframe->head->next->next->data = create_column(STRUCTURE, "Students");
     COLUMN* struct_management = dataframe->head->next->next->data;
     int randomval = 1;
     insert_value(coltest, &randomval);
@@ -52,6 +52,10 @@ int main() {
     print_col(struct_management);
     print_col(value_comparison_test2); //After hard fill  and user fill function develop test with dataframe of all types
     printf("\nDoes toctoc exist : %d", does_value_exist(dataframe, randstring, STRING));
+    STUDENT me;
+    me.id = 2;
+    me.average = 1;
+    printf("\nDoes student 2 exist : %d", does_value_exist(dataframe, &me, STRUCTURE));
     printf("\nDeleting entire Cdataframe\n------");
     delete_cdataframe(&dataframe);
     return 0;
