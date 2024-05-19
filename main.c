@@ -24,8 +24,10 @@ int main() {
     display_col_names(dataframe);
     printf("\n Filling -------");
     add_row(dataframe, 1);
+    printf("\nMemory be working ???");
     add_row(dataframe, 1);
-    delete_row(dataframe, 0);;
+    printf("\nMemory be working ???");
+    delete_row(dataframe, 0);
     print_col(coltest);
     print_col(value_comparison_test);
     print_col(struct_management);
@@ -38,6 +40,8 @@ int main() {
     add_row(dataframe, 1);
     print_col(dataframe->tail->data);
     print_col(struct_management);
+    access_replace_value(dataframe, 2, 3);
+    print_col(value_comparison_test2);
     printf("\nDeleting entire Cdataframe\n------");
     delete_cdataframe(&dataframe);
     return 0;

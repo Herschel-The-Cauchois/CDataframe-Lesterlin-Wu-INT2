@@ -212,6 +212,7 @@ int add_row(CDATAFRAME *cdf, int hard) {
 void delete_row(CDATAFRAME *cdf, unsigned long long int i) {
     lnode* temp = cdf->head; //Creates a pointer at the head of the list of columns.
     while (temp != NULL) {
+        printf("\nMemory be working ???");
         free_value(temp->data, i); //Uses the free value function at index i on all columns.
         temp = temp->next;
     }
@@ -365,6 +366,97 @@ int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype) {
             }
         default:
             return 0;
+    }
+}
+
+int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned long long int col) {
+    lnode* temp = cdf->head; //Points towards the head of the linked list.
+    unsigned long long int row_index = 0, col_index = 0; //Sets up local variables that will be incremented as we loop through the SLLs.
+    while (temp != NULL && col != col_index) { //Looks for the right column, if ends up at the end of the dataframe will stop the function.
+        col_index++;
+        temp = temp->next;
+    }
+    if (temp == NULL) {
+        return 1;
+    }
+    DATARRAY* temp2 = ((COLUMN*) temp->data)->data;
+    while (temp2 != NULL && row != row_index) { //Does the same for the rows.
+        row_index++;
+        temp2 = temp2->next;
+    }
+    if (temp2 == NULL) {
+        return 1;
+    }
+    char* display_buffer = (char*) malloc(32*sizeof(char));
+    printf("Finished counting !");
+    display_converter(temp->data, row_index, display_buffer, 32);
+    printf("\nReached value : %s", display_buffer); //Displays the reached values and proposes to change it.
+    unsigned int yes_or_no = 2;
+    while (yes_or_no > 1) {
+        printf("\nWould you like to replace it ? (Y : 1/N : 0) : ");
+        scanf("%u", &yes_or_no);
+    }
+    if (!yes_or_no) {
+        return 0; //If no, ends up successfully the function.
+    } else {
+        COL_TYPE new_data; //For user input filling, creates a variable that can hold all the datatypes the dataframe can handle.
+        switch (((COLUMN*) temp->data)->column_type) {
+
+            case NULLVAL: //If the column doesn't have a type, does not bother to try filling it.
+                return 1;
+            case UINT:
+                printf("\nEnter an unsigned integer : ");
+                scanf("%u", &(new_data.uint_value));
+                temp2->data.uint_value = new_data.uint_value; //Replace the old value with the new value.
+                break; //Repeat for all other cases.
+            case INT:
+                printf("\nEnter an integer : ");
+                scanf("%d", &(new_data.int_value));
+                temp2->data.int_value = new_data.int_value;
+                break;
+            case CHAR:
+                printf("\nEnter a character : ");
+                scanf("%c", &(new_data.char_value));
+                scanf("%c", &(new_data.char_value));
+                temp2->data.char_value = new_data.char_value;
+                break;
+            case FLOAT:
+                printf("\nEnter a float : ");
+                scanf("%f", &(new_data.float_value));
+                temp2->data.float_value = new_data.float_value;
+                break;
+            case DOUBLE:
+                printf("\nEnter a double float : ");
+                scanf("%lf", &(new_data.double_value));
+                temp2->data.double_value = new_data.double_value;
+                break;
+            case STRING:
+                printf("\nEnter size of the string : ");
+                char* temp3 = (char*) malloc(256*sizeof(char));
+                unsigned int size = -1; //This will be converted into a huge value to trick the program to trigger the while loop to avoid skipping the size entering phase.
+                while (size > 256) {
+                    scanf("%d", &size); //Lets the user enter a personalized string size for flexible memory management.
+                }
+                new_data.string_value = (char*) malloc((size+1)*sizeof(char)); //Test string management with this
+                printf("\nEnter a string (Entering a longer string than expected will cut it) : ");
+                gets(temp3); //Repeats the gets instruction to avoid the backspace filling the buffer
+                gets(temp3); //And skipping the user input phase.
+                printf("\nString alloc test : %s", temp3);
+                snprintf(new_data.string_value, size+1, "%s", temp3);
+                printf("\nThere should be smth here : %s", new_data.string_value);
+                //Since this member is a pointer, the string member is passed directly.
+                temp2->data.string_value = new_data.string_value;
+                break;
+            case STRUCTURE:
+                new_data.struct_value = (STUDENT*) malloc(sizeof(STUDENT));
+                printf("\nEnter Student ID (integer) : ");
+                scanf("%d", &((STUDENT*) new_data.struct_value)->id);
+                printf("\nEnter Student average grade : ");
+                scanf("%f", &((STUDENT*) new_data.struct_value)->average);
+                temp2->data.struct_value = new_data.struct_value;
+                break;
+        }
+        return 0;
     }
 }
 

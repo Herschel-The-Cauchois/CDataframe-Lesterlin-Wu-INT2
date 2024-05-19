@@ -67,12 +67,14 @@ int insert_value(COLUMN *col, void *value) {
                     col->size += sizeof(char);
                     break;
                 case FLOAT:
+                    printf("\nFloats be cooking tonite");
                     new_node->prev = temp;
                     new_node->next = NULL;
                     temp->next = new_node;
                     float* value5 = (float*) value;
                     new_node->data.float_value = *value5;
                     col->size += sizeof(float);
+                    printf("\nFloats finished");
                     break;
                 case DOUBLE:
                     new_node->prev = temp;
@@ -97,6 +99,7 @@ int insert_value(COLUMN *col, void *value) {
                     temp->next = new_node;
                     new_node->data.struct_value = value;
                     col->size += sizeof(value);
+                    printf("\nSkibidi dop dop dop yes yes");
                     break;
             }
             return 0;
@@ -152,6 +155,7 @@ int insert_value(COLUMN *col, void *value) {
                     col->size += sizeof(*value7);
                     break;
                 case STRUCTURE:
+                    printf("\nSkibidi dop dop dop yes yes");
                     new_node->data.struct_value = value;
                     col->size += sizeof(value);
                     break;
