@@ -2,40 +2,49 @@
 #include <stdlib.h>
 #include "list.h"
 #include "column.h"
+#include "cdataframe.h"
 
 int main() {
-    printf("Hello, World!\n");
-    COLUMN* test1, *test4;
-    test1 = create_column(UINT, "test");
-    test4 = create_column(STRING, "test4");
-    printf("%s", test1->title);
-    int test2 = 1;
-    char* test3 = "aa";
-    char* test5 = "ttttt";
-    //Hard fills test1 numerical column
-    insert_value(test1, &test2);
-    test2++;
-    insert_value(test1, &test2);
-    test2++;
-    insert_value(test1, &test2);
-    test2++;
-    insert_value(test1, &test2);
-    printf("\n%d", test1->data->data.int_value); // Looks up first value
-    //Fills up test4 column of strings.
-    insert_value(test4, test3);
-    printf("\n%s", test4->data->data.string_value);
-    insert_value(test4, test5);
-    printf("\n%s", test4->data->next->data.string_value);
-    free_value(test4, 2); //Frees a string of text4 column
-    printf("\n-------- COLPRINT TEST -------");
-    print_col(test1);
-    printf("\n--- [COUNTER COLPRINT TEST] ----");
-    printf("\n%d", test1->data->data.int_value);
-    DATARRAY* temp = test1->data;
-    printf("\n%d", temp->data.int_value);
-    while (temp != NULL) {
-        printf("\n%d", temp->data.int_value);
-        temp = temp->next;
-    }
+    ENUM_TYPE cdftype[] = {INT, STRING, STRUCTURE,FLOAT};
+    CDATAFRAME* dataframe = create_cdataframe(cdftype, 4); //Creates a simple dataframe with four columns.
+    display_col_names(dataframe);
+    COLUMN * coltest = dataframe->head->next->data;
+    rename_col(dataframe, "Sans nom 1", "toto");
+    rename_col(dataframe, "Sans nom 2", "Randcol");
+    rename_col(dataframe, "Sans nom 3", "Students");
+    rename_col(dataframe, "Sans nom 4", "titi");
+    COLUMN * value_comparison_test = dataframe->head->data;
+    COLUMN * value_comparison_test2 = dataframe->tail->data;
+    COLUMN* struct_management = dataframe->head->next->next->data;
+    fill_cdataframe(dataframe);
+    cells_inferior_x(dataframe, 2.0);
+    cells_superior_x(dataframe, 0);
+    cells_equal_x(dataframe, 2.0);
+    rows_cols(dataframe);
+    display_col_names(dataframe);
+    printf("\n Filling -------");
+    add_row(dataframe, 1);
+    printf("\nMemory be working ???");
+    add_row(dataframe, 1);
+    printf("\nMemory be working ???");
+    delete_row(dataframe, 0);
+    print_col(coltest);
+    print_col(value_comparison_test);
+    print_col(struct_management);
+    print_col(value_comparison_test2); //After hard fill  and user fill function develop test with dataframe of all types
+    STUDENT me;
+    me.id = 2;
+    me.average = 1;
+    printf("\nDoes student 2 exist : %d", does_value_exist(dataframe, &me, STRUCTURE));
+    add_col(dataframe);
+    add_row(dataframe, 1);
+    print_col(dataframe->tail->data);
+    print_col(struct_management);
+    access_replace_value(dataframe, 2, 3);
+    display_cdataframe(dataframe);
+    display_cdataframe_col_limited(dataframe, 1);
+    display_cdataframe_row_limited(dataframe, 2);
+    printf("\nDeleting entire Cdataframe\n------");
+    delete_cdataframe(&dataframe);
     return 0;
 }

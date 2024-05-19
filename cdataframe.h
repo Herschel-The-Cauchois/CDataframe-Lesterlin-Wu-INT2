@@ -7,11 +7,9 @@ typedef list CDATAFRAME;
 
 CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size);
 
-void delete_cdataframe(CDATAFRAME **cdf);
-
 void delete_column(CDATAFRAME *cdf, char *col_name);
 
-int get_cdataframe_cols_size(CDATAFRAME *cdf);
+void delete_cdataframe(CDATAFRAME **cdf);
 
 void fill_cdataframe(CDATAFRAME *cdf);
 
@@ -21,19 +19,20 @@ void display_cdataframe_row_limited(CDATAFRAME *cdf, int limit);
 
 void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit);
 
-int add_row(CDATAFRAME *cdf);
+int add_row(CDATAFRAME *cdf, int hard); //Hard serves as a boolean to indicate if the data added should be hard filled
+//or based on user input.
 
-int delete_row(CDATAFRAME *cdf);
+void delete_row(CDATAFRAME *cdf, unsigned long long int i);
 
 int add_col(CDATAFRAME *cdf);
 
-int del_col(CDATAFRAME *cdf);
+int rename_col(CDATAFRAME *cdf, char* column, char* new_name);
 
-int rename_col(CDATAFRAME *cdf, char* column);
-
-int does_value_exist(CDATAFRAME *cdf, void *value);
+int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype);
 
 int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned long long int col);
+
+void display_col_names(CDATAFRAME *cdf);
 
 void rows_cols(CDATAFRAME *cdf); //First function of the Cdataframe statistic function
 

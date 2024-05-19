@@ -67,12 +67,14 @@ int insert_value(COLUMN *col, void *value) {
                     col->size += sizeof(char);
                     break;
                 case FLOAT:
+                    printf("\nFloats be cooking tonite");
                     new_node->prev = temp;
                     new_node->next = NULL;
                     temp->next = new_node;
                     float* value5 = (float*) value;
                     new_node->data.float_value = *value5;
                     col->size += sizeof(float);
+                    printf("\nFloats finished");
                     break;
                 case DOUBLE:
                     new_node->prev = temp;
@@ -87,6 +89,7 @@ int insert_value(COLUMN *col, void *value) {
                     new_node->next = NULL;
                     temp->next = new_node;
                     char* value7 = (char*) value;
+                    printf("\nInserting string test : %s", value7);
                     new_node->data.string_value = value7;
                     col->size += sizeof(value7);
                     break;
@@ -96,6 +99,7 @@ int insert_value(COLUMN *col, void *value) {
                     temp->next = new_node;
                     new_node->data.struct_value = value;
                     col->size += sizeof(value);
+                    printf("\nSkibidi dop dop dop yes yes");
                     break;
             }
             return 0;
@@ -146,11 +150,12 @@ int insert_value(COLUMN *col, void *value) {
                 case STRING:
                     new_node = new_node;
                     char* value7 = (char*) value;
-                    printf("\n%s", value7);
+                    printf("\nInserting string test : %s", value7);
                     new_node->data.string_value = value7;
                     col->size += sizeof(*value7);
                     break;
                 case STRUCTURE:
+                    printf("\nSkibidi dop dop dop yes yes");
                     new_node->data.struct_value = value;
                     col->size += sizeof(value);
                     break;
@@ -178,9 +183,14 @@ int free_value(COLUMN *col, unsigned long long int index) {
         free(linked_list);  //Frees concerned node.
         return 0;
     } else {  //If we're at any other given node :
+        printf("\nRemoving those middle nodes");
         linked_list->prev->next = linked_list->next;  //Attaches back the wagons : previous node's successor becomes
         //the successor of the node we're pointing at.
+        if (linked_list->next != NULL) {
+            linked_list->next->prev = linked_list->prev; //The predecessor of the node becomes its successor's predecessor.
+        }
         free(linked_list);  //Frees the concerned now which is now isolated from the list.
+        printf("\nNode freed.");
         return 0;
     }
 }
@@ -216,9 +226,8 @@ void display_converter(COLUMN *col, unsigned long long int index, char* buffer, 
             snprintf(buffer, size, "%s", temp->data.string_value);
             break;
         case STRUCTURE:
-            //C doesn't offer the possibility to reflexively access the member of its structure, hence it is not
-            //possible to implement a convenient and all encompassing way of displaying structure data.
-            snprintf(buffer, size, "%s", "NOT SUPPORTED YET");
+            //Done for the simple structure student.
+            snprintf(buffer, size, "Student : %d | Average : %.2f", ((STUDENT*) temp->data.struct_value)->id, ((STUDENT*) temp->data.struct_value)->average);
             break;
     }
 }
@@ -227,10 +236,11 @@ void display_converter(COLUMN *col, unsigned long long int index, char* buffer, 
 void print_col(COLUMN* col) {
     DATARRAY* temp = col->data;
     int iterator = 0;
-    char* buffer = (char*) malloc(32*sizeof(char));
+    char* buffer = (char*) malloc(64*sizeof(char));
+    printf("\n%s\n-------", col->title);
     do {
         //For each node encountered, proceeds to convert it into a string, and then print it to the side of its index.
-        display_converter(col, iterator, buffer, 32);
+        display_converter(col, iterator, buffer, 64);
         printf("\n[%d] %s", iterator, buffer);
         temp = temp->next; //Moves to the next node and increases iterator that represents the node's index.
         iterator++;
