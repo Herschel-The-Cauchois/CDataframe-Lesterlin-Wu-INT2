@@ -28,7 +28,7 @@ int delete_row(CDATAFRAME *cdf, unsigned long long int i);
 
 int add_col(CDATAFRAME *cdf);
 
-int rename_col(CDATAFRAME *cdf, char* column);
+int rename_col(CDATAFRAME *cdf, char* column, char* new_name);
 
 int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype);
 

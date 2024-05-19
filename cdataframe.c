@@ -189,6 +189,27 @@ int add_row(CDATAFRAME *cdf, int hard) {
     return 0;
 }
 
+int rename_col(CDATAFRAME *cdf, char* column, char* new_name) {
+    lnode* temp = cdf->head; //Creates temporary pointer that points to the start node.
+    COLUMN* col = NULL;
+    lnode* col_node;
+    while (temp != NULL) {
+        if (temp->data != NULL && !strcmp(((COLUMN*) temp->data)->title, column)) {
+            col = (COLUMN *) temp->data;  //The col pointer will then each time point at the column data of the node.
+            col_node = temp;
+            printf("\n%u", col->column_type);  //Prints the column type if it finds it.
+        }
+        temp = temp->next;
+    }
+    if (col == NULL) {
+        //If the column wasn't found, ends the function.
+        printf("\nNot found");
+        return 0;
+    }
+    ((COLUMN*) col_node->data)->title = new_name;
+    return 1;
+}
+
 int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype) {
     lnode* temp = cdf->head; //Stores the head of the list of columns.
     switch (datatype) {
