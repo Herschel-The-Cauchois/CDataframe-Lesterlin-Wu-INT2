@@ -16,7 +16,9 @@ int main() {
     COLUMN * value_comparison_test2 = dataframe->tail->data;
     int randomval = 1;
     insert_value(coltest, &randomval);
-    insert_value(coltest, &randomval); //Creates two columns and fills one with a random value.
+    char* randstring = "toctoc";
+    printf("\t %s", randstring);
+    insert_value(coltest, randstring); //Creates two columns and fills one with a random value.
     printf("\nValue of first col node : %s", coltest->data->data.string_value);
     printf("\nValue of second col node : %s", coltest->data->next->data.string_value); //Prints them.
     insert_value(value_comparison_test, &randomval); // Sets up the numerical columns to test the comparison functions.
@@ -38,8 +40,15 @@ int main() {
     printf("\n---------");
     print_col(value_comparison_test2);
     rows_cols(dataframe);
-    printf("\tERASING");
     display_col_names(dataframe);
+    printf("\n Filling -------");
+    add_row(dataframe, 1);
+    add_row(dataframe, 1);
+    add_row(dataframe, 0);
+    print_col(coltest);
+    print_col(value_comparison_test);
+    print_col(value_comparison_test2); //After hard fill  and user fill function develop test with dataframe of all types
+    printf("\nDoes toctoc exist : %d", does_value_exist(dataframe, randstring, STRING));
     printf("\nDeleting entire Cdataframe\n------");
     delete_cdataframe(&dataframe);
     return 0;

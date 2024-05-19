@@ -21,15 +21,16 @@ void display_cdataframe_row_limited(CDATAFRAME *cdf, int limit);
 
 void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit);
 
-int add_row(CDATAFRAME *cdf);
+int add_row(CDATAFRAME *cdf, int hard); //Hard serves as a boolean to indicate if the data added should be hard filled
+//or based on user input.
 
-int delete_row(CDATAFRAME *cdf);
+int delete_row(CDATAFRAME *cdf, unsigned long long int i);
 
 int add_col(CDATAFRAME *cdf);
 
 int rename_col(CDATAFRAME *cdf, char* column);
 
-int does_value_exist(CDATAFRAME *cdf, void *value);
+int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype);
 
 int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned long long int col);
 

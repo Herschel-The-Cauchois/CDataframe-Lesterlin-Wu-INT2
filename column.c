@@ -87,6 +87,7 @@ int insert_value(COLUMN *col, void *value) {
                     new_node->next = NULL;
                     temp->next = new_node;
                     char* value7 = (char*) value;
+                    printf("\nInserting string test : %s", value7);
                     new_node->data.string_value = value7;
                     col->size += sizeof(value7);
                     break;
@@ -146,7 +147,7 @@ int insert_value(COLUMN *col, void *value) {
                 case STRING:
                     new_node = new_node;
                     char* value7 = (char*) value;
-                    printf("\n%s", value7);
+                    printf("\nInserting string test : %s", value7);
                     new_node->data.string_value = value7;
                     col->size += sizeof(*value7);
                     break;
@@ -185,7 +186,7 @@ int free_value(COLUMN *col, unsigned long long int index) {
             linked_list->next->prev = linked_list->prev; //The predecessor of the node becomes its successor's predecessor.
         }
         free(linked_list);  //Frees the concerned now which is now isolated from the list.
-        printf("\nkk boudin");
+        printf("\nNode freed.");
         return 0;
     }
 }
@@ -234,6 +235,7 @@ void print_col(COLUMN* col) {
     DATARRAY* temp = col->data;
     int iterator = 0;
     char* buffer = (char*) malloc(32*sizeof(char));
+    printf("\n%s\n-------", col->title);
     do {
         //For each node encountered, proceeds to convert it into a string, and then print it to the side of its index.
         display_converter(col, iterator, buffer, 32);
