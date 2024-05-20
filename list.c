@@ -76,13 +76,11 @@ void lst_delete_head(list * lst) {
 
 void lst_delete_tail(list * lst) {
     if (lst->tail->prev == NULL) {
-        printf("\nFreeing completely the list");
         free(lst->tail);
         lst->head = NULL;
         lst->tail = NULL;
         return;
     }
-    printf("\nFreeing the end of the list.");
     lst->tail = lst->tail->prev;
     free(lst->tail->next);
     lst->tail->next = NULL;

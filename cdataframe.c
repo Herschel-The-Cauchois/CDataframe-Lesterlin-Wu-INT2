@@ -56,7 +56,6 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
         if (temp->data != NULL && !strcmp(((COLUMN*) temp->data)->title,col_name)) {
             col = (COLUMN *) temp->data;  //The col pointer will then each time point at the column data of the node.
             col_node = temp;
-            printf("\n%u", col->column_type);  //Prints the column type if it finds it.
         }
         temp = temp->next;
     }
@@ -65,16 +64,13 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
         printf("\nNot found");
         return;
     }
-    printf("\nColumn retrieved.");
     int flag = 0;
     while (flag == 0) {
         //Until the free_value functions returns a 1 that indicates that the second element of the SLL is freed, loops.
         flag = free_value(col, 1);
     }
-    printf("\nFreeing other column's values : done");
     free_value(col, 0); //Frees the head of the column.
     free(col);  //Frees the data attribute of the node itself.
-    printf("\nFreeing col pointer : done");
     lst_delete_lnode(cdf, col_node); //Frees the now useless node of the deleted column.
     printf("\nColumn deleted !");
 }
@@ -83,15 +79,11 @@ void delete_cdataframe(CDATAFRAME **cdf) {
     if (*cdf == NULL) {
         return;
     }
-    printf("\nNULL condition passed");
     while ((*cdf)->head != NULL) {
-        printf("\nFreeing a column omg.");
         char* col_title = ((COLUMN*) (*cdf)->tail->data)->title;
         delete_column(*cdf, col_title);
     }
-    printf("\nFreed cols baby");
     free(*cdf);
-    printf("\nDataframe deleted !!!!");
 }
 
 void fill_cdataframe(CDATAFRAME *cdf) {
@@ -220,9 +212,7 @@ int add_row(CDATAFRAME *cdf, int hard) {
                     printf("\nEnter a string (Entering a longer string than expected will cut it) : ");
                     gets(temp2); //Repeats the gets instruction to avoid the backspace filling the buffer
                     gets(temp2); //And skipping the user input phase.
-                    printf("\nString alloc test : %s", temp2);
                     snprintf(new_data.string_value, size+1, "%s", temp2);
-                    printf("\nThere should be smth here : %s", new_data.string_value);
                     //Since this member is a pointer, the string member is passed directly.
                 }
                 insert_value(temp->data, new_data.string_value);
@@ -248,7 +238,6 @@ int add_row(CDATAFRAME *cdf, int hard) {
 void delete_row(CDATAFRAME *cdf, unsigned long long int i) {
     lnode* temp = cdf->head; //Creates a pointer at the head of the list of columns.
     while (temp != NULL) {
-        printf("\nMemory be working ???");
         free_value(temp->data, i); //Uses the free value function at index i on all columns.
         temp = temp->next;
     }
@@ -256,7 +245,6 @@ void delete_row(CDATAFRAME *cdf, unsigned long long int i) {
 
 int add_col(CDATAFRAME *cdf) {
     lnode* tail = cdf->tail; //Creates a pointer at the tail of the list of columns.
-    printf("\nTail column is %s", ((COLUMN*) tail->data)->title);
     lnode* new = (lnode*) malloc(sizeof(lnode));
     new->prev = tail;
     new->next = NULL;  //Initializes the future new lnode to preserve the logic of the list.
@@ -424,7 +412,6 @@ int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned l
         return 1;
     }
     char* display_buffer = (char*) malloc(32*sizeof(char));
-    printf("Finished counting !");
     display_converter(temp->data, row_index, display_buffer, 32);
     printf("\nReached value : %s", display_buffer); //Displays the reached values and proposes to change it.
     unsigned int yes_or_no = 2;
@@ -477,9 +464,7 @@ int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned l
                 printf("\nEnter a string (Entering a longer string than expected will cut it) : ");
                 gets(temp3); //Repeats the gets instruction to avoid the backspace filling the buffer
                 gets(temp3); //And skipping the user input phase.
-                printf("\nString alloc test : %s", temp3);
                 snprintf(new_data.string_value, size+1, "%s", temp3);
-                printf("\nThere should be smth here : %s", new_data.string_value);
                 //Since this member is a pointer, the string member is passed directly.
                 temp2->data.string_value = new_data.string_value;
                 break;

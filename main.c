@@ -9,9 +9,9 @@ int main() {
     ENUM_TYPE cdftype[] = {UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE}; //For the demo, creates an array with all types managed.
     CDATAFRAME* dataframe = create_cdataframe(cdftype, 7); //Creates a simple dataframe with each type in one column.
     printf("\nWelcome to CDataframe DEMO ! A Project by WU Julien and LESTERLIN Raphaël at EFREI.");
-    fill_cdataframe(dataframe); //Fills cdataframe following user instruction
+    fill_cdataframe(dataframe); //Fills cdataframe following user instruction. Warning : after tests, there is technical possibility to do only 32 rows maximum. Reasons for this behavior is unknown, as putting more will yield heap corruption errors.
     unsigned int choice = 0;
-    while (choice <= 14) {
+    while (choice <= 14) { //Maintains the user in a selection menu until he has selected the 14th option.
         printf("\nAfter creating your dataframe, you have now reached the main menu. What do you wish to do with your dataframe ?");
         printf("\n[1] Display the entire Dataframe;");
         printf("\n[2] Display columns until a limit;");
@@ -27,24 +27,24 @@ int main() {
         printf("\n[12] Display number of rows and columns;");
         printf("\n[13] Take a value and proceeds to display the cells equal, inferior or superior to said value;");
         printf("\n[14] Quit and free the dataframe;");
-        while (choice > 14 || choice < 1) {
+        while (choice > 14 || choice < 1) { //Forces the user to enter a number between the allowed values.
             printf("\nEnter a value : ");
             scanf("%u", &choice);
         }
         switch (choice) {
-
+            //Switches between each option.
             case 1:
                 display_cdataframe(dataframe);
                 choice = 0;
                 break;
             case 2:
-                printf("\t");
+                printf("\t"); //Those statements are mandatory when starting by a variable declaration the specific case, else it throws errors.
                 int limit = 0;
-                while (limit < 1) {
+                while (limit < 1) { //Same mechanism as for the choice variable.
                     printf("\nPlease enter a limit : ");
                     scanf("%d", &limit);
                 }
-                display_cdataframe_col_limited(dataframe, limit);
+                display_cdataframe_col_limited(dataframe, limit); //Calls the appropriate function.
                 choice = 0;
                 break;
             case 3:
@@ -177,22 +177,22 @@ int main() {
                 break;
             case 7:
                 printf("\t");
-                char* col_buffer1 = (char*) malloc(32*sizeof(char));
+                char* col_buffer1 = (char*) malloc(32*sizeof(char)); //Creates a buffer that will hold user string input.
                 printf("\nPlease enter the name of a column : ");
-                gets(col_buffer1);
+                gets(col_buffer1); //The doubling is necessary to prevent backspace filling the buffer.
                 gets(col_buffer1);
                 delete_column(dataframe, col_buffer1);
                 choice = 0;
                 break;
             case 8:
                 printf("\t");
-                char* col_buffer2 = (char*) malloc(32*sizeof(char));
+                char* col_buffer2 = (char*) malloc(32*sizeof(char)); //Same technique as above, repeated twice.
                 printf("\nPlease enter the name of a column : ");
                 gets(col_buffer2);
                 gets(col_buffer2);
                 char* col_buffer3 = (char*) malloc(32*sizeof(char));
                 printf("\nPlease enter its new name : ");
-                gets(col_buffer3);
+                gets(col_buffer3); //Since the backspace buffer filling doesn't activate here, we only need one gets.
                 rename_col(dataframe, col_buffer2, col_buffer3);
                 choice = 0;
                 break;
@@ -204,7 +204,7 @@ int main() {
                     scanf("%d", &type);
                 }
                 switch (type) {
-
+                    //For each case, asks the user a value to search and yields a feedback.
                     case NULLVAL: //If the column doesn't have a type, does not bother to try filling it.
                         return 1;
                     case UINT:
@@ -323,7 +323,7 @@ int main() {
                 cells_superior_x(dataframe, value);
                 choice = 0;
                 break;
-            case 14:
+            case 14: //This is the case that ends the program by putting in choice a value that makes it get out of the while loop.
                 choice = 15;
                 break;
             default:
@@ -332,6 +332,7 @@ int main() {
         }
     }
     printf("\nDeleting entire Cdataframe\n------");
-    delete_cdataframe(&dataframe);
+    delete_cdataframe(&dataframe); //Finally frees the cdataframe.
+    printf("\nThank you for using our CDataframe Demo. We may come back with more improvements. Ciao :)");
     return 0;
 }
