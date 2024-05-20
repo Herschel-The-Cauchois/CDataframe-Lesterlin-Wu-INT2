@@ -6,10 +6,10 @@
 #include "cdataframe.h"
 
 int main() {
-    ENUM_TYPE cdftype[] = {UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE};
+    ENUM_TYPE cdftype[] = {UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE}; //For the demo, creates an array with all types managed.
     CDATAFRAME* dataframe = create_cdataframe(cdftype, 7); //Creates a simple dataframe with each type in one column.
     printf("\nWelcome to CDataframe DEMO ! A Project by WU Julien and LESTERLIN Raphaël at EFREI.");
-    fill_cdataframe(dataframe);
+    fill_cdataframe(dataframe); //Fills cdataframe following user instruction
     unsigned int choice = 0;
     while (choice <= 14) {
         printf("\nAfter creating your dataframe, you have now reached the main menu. What do you wish to do with your dataframe ?");
@@ -173,6 +173,41 @@ int main() {
                         insert_value(((COLUMN*) dataframe->tail->data), new_data.struct_value);
                         break;
                 }
+                choice = 0;
+                break;
+            case 7:
+                printf("\t");
+                char* col_buffer1 = (char*) malloc(32*sizeof(char));
+                printf("\nPlease enter the name of a column : ");
+                gets(col_buffer1);
+                gets(col_buffer1);
+                delete_column(dataframe, col_buffer1);
+                choice = 0;
+                break;
+            case 8:
+                printf("\t");
+                char* col_buffer2 = (char*) malloc(32*sizeof(char));
+                printf("\nPlease enter the name of a column : ");
+                gets(col_buffer2);
+                gets(col_buffer2);
+                char* col_buffer3 = (char*) malloc(32*sizeof(char));
+                printf("\nPlease enter its new name : ");
+                gets(col_buffer3);
+                rename_col(dataframe, col_buffer2, col_buffer3);
+                choice = 0;
+                break;
+            case 9:
+                printf("\t");
+                choice = 0;
+                break;
+            case 10:
+                printf("\t");
+                unsigned long long int index1 = 0, index2 = 0;
+                printf("\nPlease enter the index of a row : ");
+                scanf("%llu", &index1);
+                printf("\nPlease enter the index of a column : ");
+                scanf("%llu", &index2);
+                access_replace_value(dataframe, index1, index1);
                 choice = 0;
                 break;
             case 11:
