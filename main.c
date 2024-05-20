@@ -198,6 +198,98 @@ int main() {
                 break;
             case 9:
                 printf("\t");
+                int type = 1;
+                while (type < 2 || type > 8) { //Secures input to obtain a type supported by the program.
+                    printf("\nChoose a type for the value to search, from 2 to 8 (UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE) : ");
+                    scanf("%d", &type);
+                }
+                switch (type) {
+
+                    case NULLVAL: //If the column doesn't have a type, does not bother to try filling it.
+                        return 1;
+                    case UINT:
+                        printf("\t");
+                        unsigned int uint_value;
+                        printf("\nEnter an unsigned integer : ");
+                        scanf("%u", &uint_value);
+                        if (does_value_exist(dataframe, &uint_value, UINT)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break; //Repeat for all other cases.
+                    case INT:
+                        printf("\t");
+                        int int_value;
+                        printf("\nEnter an integer : ");
+                        scanf("%d", &int_value);
+                        if (does_value_exist(dataframe, &int_value, INT)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break;
+                    case CHAR:
+                        printf("\t");
+                        char char_value;
+                        printf("\nEnter a character : ");
+                        scanf("%c", &char_value);
+                        scanf("%c", &char_value);
+                        if (does_value_exist(dataframe, &char_value, CHAR)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break;
+                    case FLOAT:
+                        printf("\t");
+                        float float_value;
+                        printf("\nEnter a float : ");
+                        scanf("%f", &float_value);
+                        if (does_value_exist(dataframe, &float_value, FLOAT)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break;
+                    case DOUBLE:
+                        printf("\t");
+                        double double_value;
+                        printf("\nEnter a double float : ");
+                        scanf("%lf", &double_value);
+                        if (does_value_exist(dataframe, &double_value, DOUBLE)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break;
+                    case STRING:
+                        printf("\t");
+                        char* str_value = (char*) malloc(32*sizeof(char));
+                        printf("\nEnter a string : ");
+                        gets(str_value);
+                        if (does_value_exist(dataframe, &str_value, STRING)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break;
+                    case STRUCTURE:
+                        printf("\t");
+                        STUDENT* struct_value = (STUDENT*) malloc(sizeof(STUDENT));
+                        printf("\nEnter a student ID : ");
+                        scanf("%d", &struct_value->id);
+                        printf("\nEnter an average : ");
+                        scanf("%f", &struct_value->average);
+                        if (does_value_exist(dataframe, &struct_value, STRUCTURE)) {
+                            printf("\nYes!");
+                        } else {
+                            printf("\nNo :(");
+                        }
+                        break;
+                    default:
+                        break;
+                }
                 choice = 0;
                 break;
             case 10:
