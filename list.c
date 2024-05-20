@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "list.h"
+
+//LESTERLIN Raphaël and WU Julien L1 INT2 - CDataframe project - This is the given premade list.h library.
+
 lnode *lst_create_lnode(void *dat) {
     lnode *ptmp = (lnode *) malloc(sizeof(lnode));
     ptmp->data = dat;

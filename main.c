@@ -5,6 +5,8 @@
 #include "column.h"
 #include "cdataframe.h"
 
+//LESTERLIN Raphaël and WU Julien L1 INT2 - CDataframe project - This is the main program the user will interact with.
+
 int main() {
     ENUM_TYPE cdftype[] = {UINT, INT, CHAR, FLOAT, DOUBLE, STRING, STRUCTURE}; //For the demo, creates an array with all types managed.
     CDATAFRAME* dataframe = create_cdataframe(cdftype, 7); //Creates a simple dataframe with each type in one column.
@@ -153,9 +155,7 @@ int main() {
                             printf("\nEnter a string (Entering a longer string than expected will cut it) : ");
                             gets(temp2); //Repeats the gets instruction to avoid the backspace filling the buffer
                             gets(temp2); //And skipping the user input phase.
-                            printf("\nString alloc test : %s", temp2);
                             snprintf(new_data.string_value, size+1, "%s", temp2);
-                            printf("\nThere should be smth here : %s", new_data.string_value);
                             //Since this member is a pointer, the string member is passed directly.
                         }
                         insert_value(((COLUMN*) dataframe->tail->data), new_data.string_value);

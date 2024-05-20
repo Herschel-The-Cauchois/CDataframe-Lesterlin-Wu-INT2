@@ -1,6 +1,7 @@
 #ifndef CDATAFRAMEPROJECT_COLUMN_H
 #define CDATAFRAMEPROJECT_COLUMN_H
 
+//Elementary structure that will be considered in the structure manipulating rows of the dataframe.
 typedef struct Student {
     int id;
     float average;
@@ -22,6 +23,7 @@ union column_type {
 };
 typedef union column_type COL_TYPE;
 
+//This is done to manage separately the data inside the columns and the double linked list of the cdataframe.
 typedef struct datarray {
     COL_TYPE data;
     struct datarray *prev;

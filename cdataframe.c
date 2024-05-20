@@ -3,11 +3,14 @@
 #include <string.h>
 #include <time.h>
 #include "cdataframe.h"
+
+//LESTERLIN Raphaël and WU Julien L1 INT2 - CDataframe project - This is the part that contains all the functions the user will call.
+
 //Improvement idea for long csv file management : like in complexity exercise on fibonacci, create SLL of dataframes
 //containing successive parts of the csv table. To not bloat memory, when looked through a dataframe moves it to the
 //head, removes predecessor and add the next bloc of csv lines as a new dataframe as successor.
 
-//CDataframe creation function
+//CDataframe creation function, using an array of types and a size specifying the number of expected columns.
 CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size) {
     CDATAFRAME* dataframe = (CDATAFRAME*) malloc(sizeof(CDATAFRAME)); //Initializes the dataframe.
     lnode* start = (lnode*) malloc(sizeof(lnode)); //Creates its head node.
@@ -48,6 +51,8 @@ CDATAFRAME* create_cdataframe(ENUM_TYPE *cdftype, int size) {
     return dataframe;
 }
 
+
+//Deletes a column in the passed dataframe whose title is the string col_name.
 void delete_column(CDATAFRAME *cdf, char *col_name) {
     lnode* temp = cdf->head; //Creates temporary pointer that points to the start node.
     COLUMN* col = NULL;
@@ -75,6 +80,8 @@ void delete_column(CDATAFRAME *cdf, char *col_name) {
     printf("\nColumn deleted !");
 }
 
+
+//Iterates the delete column function over all the columns of the given dataframe.
 void delete_cdataframe(CDATAFRAME **cdf) {
     if (*cdf == NULL) {
         return;
@@ -86,6 +93,7 @@ void delete_cdataframe(CDATAFRAME **cdf) {
     free(*cdf);
 }
 
+//Following the user's choice, will hard fill or user fill the passed dataframe.
 void fill_cdataframe(CDATAFRAME *cdf) {
     unsigned int hard = 2;
     unsigned long long int size = 0;
@@ -102,6 +110,7 @@ void fill_cdataframe(CDATAFRAME *cdf) {
     }
 }
 
+//Iterates the print_col function over all of the dataframe's column to display it entirely.
 void display_cdataframe(CDATAFRAME *cdf) {
     //Takes the SLL and runs through it to print each of its columns.
     lnode* temp = cdf->head;
@@ -111,6 +120,7 @@ void display_cdataframe(CDATAFRAME *cdf) {
     }
 }
 
+//Same functioning as above, except takes print_col's code to use its iterator variable to limit the number of rows displayed.
 void display_cdataframe_row_limited(CDATAFRAME *cdf, unsigned long long int limit) {
     lnode* temp = cdf->head; //Stores the head of the dataframe's SLL here.
     while (temp != NULL) {
@@ -129,6 +139,7 @@ void display_cdataframe_row_limited(CDATAFRAME *cdf, unsigned long long int limi
     }
 }
 
+//Iterates the pinrt_col functions until it has done limit iterations.
 void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit) {
     //Same principle as display_cdataframe, except that a counter will trigger the end of the while loop if the limit is passed.
     lnode* temp = cdf->head;
@@ -140,6 +151,7 @@ void display_cdataframe_col_limited(CDATAFRAME *cdf, int limit) {
     }
 }
 
+//For each column in the CDataframe, adds a new value that will be either given by the user or hard filled.
 int add_row(CDATAFRAME *cdf, int hard) {
     lnode* temp = cdf->head; //Puts in a pointer the head of the list of columns.
     while (temp != NULL) { //Repeats until all columns got a new node in them.
@@ -235,6 +247,7 @@ int add_row(CDATAFRAME *cdf, int hard) {
     return 0;
 }
 
+//In the dataframe, use the free_value function on each column at row index i.
 void delete_row(CDATAFRAME *cdf, unsigned long long int i) {
     lnode* temp = cdf->head; //Creates a pointer at the head of the list of columns.
     while (temp != NULL) {
@@ -243,6 +256,7 @@ void delete_row(CDATAFRAME *cdf, unsigned long long int i) {
     }
 }
 
+//Adds a new column in the dataframe, letting the user choose its type and enter a value inside it to avoid null column problems.
 int add_col(CDATAFRAME *cdf) {
     lnode* tail = cdf->tail; //Creates a pointer at the tail of the list of columns.
     lnode* new = (lnode*) malloc(sizeof(lnode));
@@ -263,6 +277,7 @@ int add_col(CDATAFRAME *cdf) {
     return 0;
 }
 
+//Finds a column whose title correspond to the given column string, and if found replace its name by the new name string.
 int rename_col(CDATAFRAME *cdf, char* column, char* new_name) {
     lnode* temp = cdf->head; //Creates temporary pointer that points to the start node.
     COLUMN* col = NULL;
@@ -284,6 +299,7 @@ int rename_col(CDATAFRAME *cdf, char* column, char* new_name) {
     return 1;
 }
 
+//Looks in the cdataframe if the value "value" of type "datatype" exists or not.
 int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype) {
     lnode* temp = cdf->head; //Stores the head of the list of columns.
     switch (datatype) {
@@ -393,6 +409,7 @@ int does_value_exist(CDATAFRAME *cdf, void *value, ENUM_TYPE datatype) {
     }
 }
 
+//Accesses a value at column "col" and row "row", index numbers, and asks the user after showing it if they want to replace it.
 int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned long long int col) {
     lnode* temp = cdf->head; //Points towards the head of the linked list.
     unsigned long long int row_index = 0, col_index = 0; //Sets up local variables that will be incremented as we loop through the SLLs.
@@ -481,6 +498,7 @@ int access_replace_value(CDATAFRAME *cdf, unsigned long long int row, unsigned l
     }
 }
 
+//In the given cdataframe, goes through each column's title to print it.
 void display_col_names(CDATAFRAME *cdf) {
     lnode* temp = cdf->head; //Stores the head of the list of columns.
     while (temp != NULL) {
@@ -490,6 +508,7 @@ void display_col_names(CDATAFRAME *cdf) {
     }
 }
 
+//Counts with loop iteration the numbers of columns and number of rows.
 void rows_cols(CDATAFRAME *cdf) {
     lnode* temp = cdf->head; //Creates a temporary pointer with the head of the list.
     int cols = 0; //Creates two variables to store the number of columns and rows.
@@ -498,8 +517,8 @@ void rows_cols(CDATAFRAME *cdf) {
         cols++; //Counts column by looping through the cdataframe list.
         temp = temp->next;
     }
-    temp = cdf->tail;
-    DATARRAY* col_explorer = ((COLUMN*) temp->data)->data; //Retrieves a pointer to the last column's content.
+    temp = cdf->head;
+    DATARRAY* col_explorer = ((COLUMN*) temp->data)->data; //Retrieves a pointer to the first column's content.
     while (col_explorer != NULL) {
         rows++;  //Loops through the said column and increments each time it encounters a non-empty node.
         col_explorer = col_explorer->next;
@@ -507,6 +526,7 @@ void rows_cols(CDATAFRAME *cdf) {
     printf("\nThis Dataframe has %d columns and %llu rows.", cols, rows);
 }
 
+//For the remaining functions, takes a double pass-for-all variable that will convert if needed for different UINT, INT, FLOAT and DOUBLE types in the CDataframe to display cells whose values are equal, superior or inferior to x.
 void cells_equal_x(CDATAFRAME *cdf, double x) {
     lnode* temp = cdf->head;
     if (cdf->head == NULL) {
@@ -540,6 +560,7 @@ void cells_equal_x(CDATAFRAME *cdf, double x) {
     }
 }
 
+//See above comment.
 void cells_superior_x(CDATAFRAME *cdf, double x) {
     lnode* temp = cdf->head;
     if (cdf->head == NULL) {
@@ -573,6 +594,7 @@ void cells_superior_x(CDATAFRAME *cdf, double x) {
     }
 }
 
+//See above comment.
 void cells_inferior_x(CDATAFRAME *cdf, double x) {
     lnode* temp = cdf->head;
     if (cdf->head == NULL) {

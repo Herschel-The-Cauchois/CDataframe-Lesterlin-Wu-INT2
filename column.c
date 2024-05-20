@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include "column.h"
 
-//This function creates an empty column.
+//LESTERLIN Raphaël and WU Julien L1 INT2 - CDataframe project - This is the program that manages the manipulation of columns.
+
+//This function creates an empty column following a user given type and string.
 COLUMN *create_column(ENUM_TYPE type, char *title) {
     COLUMN* col;
     col = (COLUMN*) malloc(sizeof(COLUMN)); //Allocates the memory necessary to such empty column.
@@ -16,7 +18,7 @@ COLUMN *create_column(ENUM_TYPE type, char *title) {
     return col;
 };
 
-//This function inserts a value inside a column.
+//This function inserts a passed pointer value inside a column.
 int insert_value(COLUMN *col, void *value) {
     if (col->size + sizeof(value) > col->max_size) {
         //If the size of the column + the size of the value is above the physical sizes, allocates a supplementary
@@ -158,7 +160,7 @@ int insert_value(COLUMN *col, void *value) {
         }
 }
 
-//This function frees a value inside a column.
+//This function frees a value at index "index" inside a passed column.
 int free_value(COLUMN *col, unsigned long long int index) {
     DATARRAY* linked_list = col->data;  //Create a pointer to loop through the linked list.
     unsigned long long int counter = 0;  //Creates a counter of iteration to be able to navigate through all elements.
@@ -224,7 +226,7 @@ void display_converter(COLUMN *col, unsigned long long int index, char* buffer, 
     }
 }
 
-//Function that prints the whole column given by the user.
+//Function that prints the whole column, given in a pointer by the user.
 void print_col(COLUMN* col) {
     DATARRAY* temp = col->data;
     int iterator = 0;
